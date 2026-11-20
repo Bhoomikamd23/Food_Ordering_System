@@ -31,13 +31,16 @@ public class CartService {
     System.out.println("Item added to cart.");
 }
     public void removeItem(int id) {
-        for (int i = 0; i < cart.size(); i++) {
-            if (cart.get(i).getItem().getId() == id) {
-                cart.remove(i); System.out.println("Item removed."); return;
-            }
-        }
-        System.out.println("Item is not in the cart.");
+    CartItem item = findCartItemById(id);
+
+    if (item != null) {
+        cart.remove(item);
+        System.out.println("Item removed.");
+        return;
     }
+
+    System.out.println("Item is not in the cart.");
+}
     public void updateQuantity(int id, int quantity) throws InvalidQuantityException {
         if (quantity <= 0) throw new InvalidQuantityException("Quantity must be greater than zero.");
         for (CartItem item : cart) {
