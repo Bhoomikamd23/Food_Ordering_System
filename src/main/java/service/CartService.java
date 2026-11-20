@@ -77,5 +77,9 @@ public class CartService {
     public void clearCart() { cart.clear(); }
     public boolean isEmpty() {
     return cart.isEmpty();
+    }
+    public int getItemCount() {
+    return cart.size();
 }
+
 }
