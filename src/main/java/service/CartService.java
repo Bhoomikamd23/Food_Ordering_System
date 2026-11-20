@@ -57,13 +57,28 @@ public class CartService {
     System.out.println("Item is not in the cart.");
 }
     public void showCart() {
-        if (cart.isEmpty()) { System.out.println("Your cart is empty."); return; }
-        System.out.println("\n------------- YOUR CART -------------");
-        for (CartItem item : cart)
-            System.out.printf("%-20s x %-3d Rs. %.2f%n", item.getItem().getName(),
-                    item.getQuantity(), item.getAmount());
-        System.out.printf("Total: Rs. %.2f%n", getTotal());
+    if (cart.isEmpty()) {
+        System.out.println("\n========== YOUR CART ==========");
+        System.out.println("Your cart is empty.");
+        System.out.println("===============================");
+        return;
     }
+
+    System.out.println("\n============== YOUR CART ==============");
+    System.out.printf("%-20s %-10s %-12s%n", "Item", "Quantity", "Amount");
+    System.out.println("---------------------------------------");
+
+    for (CartItem item : cart) {
+        System.out.printf("%-20s %-10d Rs. %-10.2f%n",
+                item.getItem().getName(),
+                item.getQuantity(),
+                item.getAmount());
+    }
+
+    System.out.println("---------------------------------------");
+    System.out.printf("Total Amount: Rs. %.2f%n", getTotal());
+    System.out.println("=======================================");
+}
     public double getTotal() {
         double total = 0;
         for (CartItem item : cart) total += item.getAmount();
