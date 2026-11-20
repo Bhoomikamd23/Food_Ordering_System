@@ -3,6 +3,7 @@ package service;
 
 import model.CartItem;
 import model.MenuItem;
+import service.CartService;
 import exceptions.InvalidQuantityException;
 
 import org.junit.jupiter.api.Test;
@@ -74,4 +75,44 @@ public class CartServiceTest {
 
         assertEquals(400.0, cart.getTotal(), 0.001);
     }
+    @Test
+public void testZeroQuantity() {
+    CartService cart = new CartService();
+
+    assertThrows(InvalidQuantityException.class,
+            () -> cart.addItem(createMenuItem(1, "Burger", 100.0), 0));
+}
+
+@Test
+public void testNegativeQuantity() {
+    CartService cart = new CartService();
+
+    assertThrows(InvalidQuantityException.class,
+            () -> cart.addItem(createMenuItem(1, "Burger", 100.0), -2));
+}
+
+@Test
+public void testEmptyCart() {
+    CartService cart = new CartService();
+
+    assertTrue(cart.isEmpty());
+}
+
+@Test
+public void testRemoveUnavailableItem() {
+    CartService cart = new CartService();
+
+    cart.removeItem(99);
+
+    assertTrue(cart.isEmpty());
+}
+
+@Test
+public void testUpdateUnavailableItem() {
+    CartService cart = new CartService();
+
+    assertDoesNotThrow(() -> cart.updateQuantity(99, 3));
+    assertTrue(cart.isEmpty());
+}
+    
 }
