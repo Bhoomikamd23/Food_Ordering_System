@@ -5,7 +5,7 @@ import model.MenuItem;
 import exceptions.InvalidQuantityException;
 /* Handles adding, removing and updating cart items. */
 public class CartService {
-    private ArrayList<CartItem> cart = new ArrayList<>();
+    private final ArrayList<CartItem> cart = new ArrayList<>();
     public void addItem(MenuItem item, int quantity) throws InvalidQuantityException {
         if (quantity <= 0) throw new InvalidQuantityException("Quantity must be greater than zero.");
         for (CartItem cartItem : cart) {
