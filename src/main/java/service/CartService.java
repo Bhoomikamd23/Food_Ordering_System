@@ -75,4 +75,7 @@ public class CartService {
         return copy;
     }
     public void clearCart() { cart.clear(); }
+    public boolean isEmpty() {
+    return cart.isEmpty();
+}
 }
