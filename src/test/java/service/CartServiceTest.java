@@ -114,5 +114,62 @@ public void testUpdateUnavailableItem() {
     assertDoesNotThrow(() -> cart.updateQuantity(99, 3));
     assertTrue(cart.isEmpty());
 }
+@Test
+public void testTotalQuantity() throws InvalidQuantityException {
+    CartService cart = new CartService();
+
+    cart.addItem(createMenuItem(1, "Burger", 100.0), 2);
+    cart.addItem(createMenuItem(2, "Pizza", 200.0), 3);
+
+    assertEquals(5, cart.getTotalQuantity());
+}
+
+@Test
+public void testDistinctItemCount() throws InvalidQuantityException {
+    CartService cart = new CartService();
+
+    MenuItem burger = createMenuItem(1, "Burger", 100.0);
+
+    cart.addItem(burger, 2);
+    cart.addItem(burger, 3);
+    cart.addItem(createMenuItem(2, "Pizza", 200.0), 1);
+
+    assertEquals(2, cart.getItemCount());
+}
+
+@Test
+public void testCartEmptyStatus() throws InvalidQuantityException {
+    CartService cart = new CartService();
+
+    assertTrue(cart.isEmpty());
+
+    cart.addItem(createMenuItem(1, "Burger", 100.0), 1);
+
+    assertFalse(cart.isEmpty());
+}
+
+@Test
+public void testGetCartCopy() throws InvalidQuantityException {
+    CartService cart = new CartService();
+
+    cart.addItem(createMenuItem(1, "Burger", 100.0), 2);
+
+    java.util.ArrayList<CartItem> copy = cart.getCartCopy();
+
+    assertEquals(1, copy.size());
+    assertEquals(2, copy.get(0).getQuantity());
+}
+
+@Test
+public void testClearCart() throws InvalidQuantityException {
+    CartService cart = new CartService();
+
+    cart.addItem(createMenuItem(1, "Burger", 100.0), 2);
+    cart.clearCart();
+
+    assertTrue(cart.isEmpty());
+    assertEquals(0, cart.getItemCount());
+    assertEquals(0, cart.getTotalQuantity());
+}
     
 }
