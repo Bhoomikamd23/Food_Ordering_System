@@ -15,16 +15,21 @@ public class CartService {
     return null;
 }
     public void addItem(MenuItem item, int quantity) throws InvalidQuantityException {
-        if (quantity <= 0) throw new InvalidQuantityException("Quantity must be greater than zero.");
-        for (CartItem cartItem : cart) {
-            if (cartItem.getItem().getId() == item.getId()) {
-                cartItem.setQuantity(cartItem.getQuantity() + quantity);
-                System.out.println("Quantity updated in cart."); return;
-            }
-        }
-        cart.add(new CartItem(item, quantity));
-        System.out.println("Item added to cart.");
+    if (quantity <= 0) {
+        throw new InvalidQuantityException("Quantity must be greater than zero.");
     }
+
+    CartItem existingItem = findCartItemById(item.getId());
+
+    if (existingItem != null) {
+        existingItem.setQuantity(existingItem.getQuantity() + quantity);
+        System.out.println("Quantity updated in cart.");
+        return;
+    }
+
+    cart.add(new CartItem(item, quantity));
+    System.out.println("Item added to cart.");
+}
     public void removeItem(int id) {
         for (int i = 0; i < cart.size(); i++) {
             if (cart.get(i).getItem().getId() == id) {
