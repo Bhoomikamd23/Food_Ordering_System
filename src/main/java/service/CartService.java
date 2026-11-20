@@ -42,14 +42,20 @@ public class CartService {
     System.out.println("Item is not in the cart.");
 }
     public void updateQuantity(int id, int quantity) throws InvalidQuantityException {
-        if (quantity <= 0) throw new InvalidQuantityException("Quantity must be greater than zero.");
-        for (CartItem item : cart) {
-            if (item.getItem().getId() == id) {
-                item.setQuantity(quantity); System.out.println("Quantity updated."); return;
-            }
-        }
-        System.out.println("Item is not in the cart.");
+    if (quantity <= 0) {
+        throw new InvalidQuantityException("Quantity must be greater than zero.");
     }
+
+    CartItem item = findCartItemById(id);
+
+    if (item != null) {
+        item.setQuantity(quantity);
+        System.out.println("Quantity updated.");
+        return;
+    }
+
+    System.out.println("Item is not in the cart.");
+}
     public void showCart() {
         if (cart.isEmpty()) { System.out.println("Your cart is empty."); return; }
         System.out.println("\n------------- YOUR CART -------------");
