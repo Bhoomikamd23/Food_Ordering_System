@@ -6,6 +6,14 @@ import exceptions.InvalidQuantityException;
 /* Handles adding, removing and updating cart items. */
 public class CartService {
     private final ArrayList<CartItem> cart = new ArrayList<>();
+    private CartItem findCartItemById(int id) {
+    for (CartItem item : cart) {
+        if (item.getItem().getId() == id) {
+            return item;
+        }
+    }
+    return null;
+}
     public void addItem(MenuItem item, int quantity) throws InvalidQuantityException {
         if (quantity <= 0) throw new InvalidQuantityException("Quantity must be greater than zero.");
         for (CartItem cartItem : cart) {
