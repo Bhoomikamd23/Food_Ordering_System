@@ -80,6 +80,15 @@ public class CartService {
     }
     public int getItemCount() {
     return cart.size();
+    }
+    public int getTotalQuantity() {
+    int count = 0;
+
+    for (CartItem item : cart) {
+        count += item.getQuantity();
+    }
+
+    return count;
 }
 
 }
